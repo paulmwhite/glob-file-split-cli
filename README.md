@@ -1,6 +1,6 @@
-# glob-file-splitter
+# glob-file-split
 
-This `glob-file-splitter` will split a glob pattern of files into a given number of chunks (splits) and return the files as a comma separated string for a given index.
+This `glob-file-split` will split a glob pattern of files into a given number of chunks (splits) and return the files as a comma separated string for a given index.
 
 This is ideal for splitting test files across multiple workers for parallel execution.
 
