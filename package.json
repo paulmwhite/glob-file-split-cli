@@ -1,7 +1,24 @@
 {
   "name": "glob-file-split",
+  "author": "Paul White",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paulmwhite/glob-file-split-cli"
+  },
+  "keywords": [
+    "parallel",
+    "split",
+    "glob",
+    "files",
+    "tests",
+    "splitter",
+    "chunks",
+    "workers",
+    "cypress",
+    "jest"
+  ],
   "bin": "./index.js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {

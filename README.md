@@ -14,6 +14,22 @@ Examples:
     ./tests/4.js,./tests/5.js
 ```
 
+Example using to split test execution:
+
+  Worker 1:
+
+```bash
+    $ yarn test --spec $(glob-file-split -s 2 -i 0 -p './**/*.feature') 
+    cypress run --spec ./cypress/integration/1.feature,./cypress/integration/2.feature,./cypress/integration/3.feature
+```
+
+  Worker 2:
+
+```bash
+    $ yarn test --spec $(glob-file-split -s 2 -i 1 -p './**/*.feature') 
+    cypress run --spec ./cypress/integration/4.feature,./cypress/integration/5.feature
+```
+
 ## Installation
 
 Install globally:
