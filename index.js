@@ -1,43 +1,78 @@
+#!/usr/bin/env node
 var glob = require("glob");
-var argv = require("minimist")(process.argv.slice(2), {
-  number: ["splits"],
-  alias: { s: "splits" },
-  string: ["pattern"],
-  alias: { p: "pattern" },
-  number: ["index"],
-  alias: { i: "index" },
-});
+const meow = require("meow");
+const chalk = require("chalk");
+var emoji = require("node-emoji");
+const cli = meow(
+  `
+	Usage
+	  $ glob-file-split <input>
 
-console.log(argv);
+	Options
+  --splits,   -s  Number of splits/chunks
+  --pattern,  -p  Glob pattern
+  --index,    -i  Index for output
 
-if (!argv.s) {
-  throw new Error("Argument '--splits or -s' is required");
-}
+  Other options:
+  -h, --help         show usage information
+  -v, --version      print version info and exit
 
-if (argv.s <= 0) {
-  throw new Error("Argument '--splits or -s' should be greater then 0");
-}
+	Examples
+	  $ glob-file-split --splits 2 --index 0 --pattern './tests/*.js' 
+    ./tests/1.js,./tests/2.js,./tests/3.js
+    
+    $ glob-file-split --splits 2 --index 1 --pattern './tests/*.js' 
+	  ./tests/4.js,./tests/5.js
+`,
+  {
+    flags: {
+      splits: {
+        type: "number",
+        alias: "s",
+        isRequired: true,
+      },
+      pattern: {
+        type: "string",
+        alias: "p",
+        isRequired: true,
+      },
+      index: {
+        type: "number",
+        alias: "i",
+        isRequired: true,
+      },
+    },
+  }
+);
 
-if (!argv.p) {
-  throw new Error("Argument '--pattern or -p' is required");
-}
-
-if (!argv.i && argv.i !== 0) {
-  throw new Error("Argument '--index or -i' is required");
-}
-
-if (argv.s <= argv.i) {
-  throw new Error(
-    `There should be more splits ('--splits or -s') then ${argv.s}, for an index ('--index or -i') of ${argv.i}`
+if (cli.flags.splits <= 0) {
+  console.error(
+    emoji.get("warning"),
+    " Splits should be greater then 0",
+    emoji.get("warning")
   );
+  process.exit(1);
 }
 
-const files = glob.sync(argv.p);
-
-if (argv.s > files.length) {
-  throw new Error(
-    `There should not be more splits ('--splits or -s') then files`
+if (cli.flags.splits <= cli.flags.index) {
+  console.error(
+    emoji.get("warning"),
+    ` There should be more splits then ${cli.flags.splits}, for an index of ${cli.flags.index}.`,
+    emoji.get("warning"),
+    `\r\n Example --splits 10 --index 5`
   );
+  process.exit(1);
+}
+
+const files = glob.sync(cli.flags.pattern);
+
+if (cli.flags.splits > files.length) {
+  console.error(
+    emoji.get("warning"),
+    ` There should not be more splits (${cli.flags.splits}) then files (${files.length}).`,
+    emoji.get("warning")
+  );
+  process.exit(1);
 }
 
 function splitFilesIntoParts(files, parts) {
@@ -48,8 +83,8 @@ function splitFilesIntoParts(files, parts) {
   return result;
 }
 
-const splitFiles = splitFilesIntoParts(files, argv.s);
+const splitFiles = splitFilesIntoParts(files, cli.flags.splits);
 
-const output = splitFiles[argv.i].join();
+const output = splitFiles[cli.flags.index].join();
 
-console.log(output);
+console.log(chalk.green(output));
