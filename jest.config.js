@@ -1,5 +1,6 @@
 module.exports = {
   preset: 'ts-jest',
+  testPathIgnorePatterns: ['src/cli.ts'],
   collectCoverageFrom: ['src/**/*.ts'],
   coveragePathIgnorePatterns: ['/node_modules/', '<rootDir>/src/index.ts'],
   coverageDirectory: 'coverage-reports',

@@ -20,4 +20,4 @@ function returnError(message: string): void {
   process.exit(1);
 }
 
-export { validateSplits, validateFiles };
+export { validateSplits, validateFiles, returnError };
