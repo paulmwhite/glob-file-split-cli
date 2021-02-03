@@ -30,6 +30,14 @@ Example using to split test execution:
     cypress run --spec ./cypress/integration/4.feature,./cypress/integration/5.feature
 ```
 
+## Parameters
+
+| flag      | shorthand | accepts | example             |
+| ------    | --------- | ------- | ------------------- |
+| --pattern | -p        | string  | './tests/*.feature' |
+| --index   | -i        | number  | 0                   |
+| --splits  | -s        | string  | 5                   |
+
 ## Installation
 
 Install globally:

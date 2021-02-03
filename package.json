@@ -1,10 +1,12 @@
 {
   "name": "glob-file-split",
   "author": "Paul White",
+  "description": "An executable to split files across workers.",
   "repository": {
     "type": "git",
     "url": "https://github.com/paulmwhite/glob-file-split-cli"
   },
+  "homepage": "https://github.com/paulmwhite/glob-file-split-cli",
   "keywords": [
     "parallel",
     "split",
@@ -17,14 +19,35 @@
     "cypress",
     "jest"
   ],
-  "bin": "./index.js",
+  "bin": "./dist/index.js",
   "version": "0.0.3",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "test": "jest --config ./jest.config.js ",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+    "lint": "eslint \"src/**\" --fix --quiet",
+    "prettier": "prettier 'src/**/*.ts' --write",
+    "tidy": "yarn lint && yarn prettier",
+    "dev": "node --inspect=5858 -r ts-node/register ./src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc -p ."
+  },
   "dependencies": {
+    "@types/jest": "^26.0.20",
+    "@types/meow": "^5.0.0",
+    "@types/node-emoji": "^1.8.1",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
     "chalk": "^4.1.0",
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "glob": "^7.1.6",
+    "jest": "^26.6.3",
     "meow": "^9.0.0",
-    "node-emoji": "^1.10.0"
+    "node-emoji": "^1.10.0",
+    "prettier": "^2.2.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
   }
 }
