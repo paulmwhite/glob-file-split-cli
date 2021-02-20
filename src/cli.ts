@@ -38,6 +38,11 @@ const cli = meow(
         alias: 'i',
         isRequired: true,
       },
+      deleteOthers: {
+        type: 'boolean',
+        alias: 'd',
+        default: false,
+      },
     },
   },
 );
